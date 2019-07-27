@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "esnext",
+    "strict": true,
+    "importHelpers": true,
+    "skipLibCheck": true,
+    "skipDefaultLibCheck": true,
+    "moduleResolution": "node",
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "experimentalDecorators": true,
+    "sourceMap": true,
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["src/*"]
+    },
+    "lib": ["dom", "dom.iterable", "esnext", "scripthost"]
+  },
+  "include": ["src/**/*.ts", "src/**/*.vue", "tests/**/*.ts"],
+  "exclude": ["node_modules"]
+}
