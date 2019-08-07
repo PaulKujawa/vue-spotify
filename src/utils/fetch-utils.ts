@@ -1,67 +1,103 @@
-import { onBeforeDestroy, onCreated, state } from "vue-function-api";
+import { pipe } from "@/utils/pipe";
+import { onBeforeDestroy, onCreated, state, watch } from "vue-function-api";
 
-export type StringDirectory = {
-  [key: string]: string;
-};
+type FetchParams = { url: RequestInfo; init: RequestInit };
 
 export type FetchResponse<DTO> = {
   data: DTO | null;
-  error: TypeError | null;
+  error: { message: string; status?: number } | null;
   pending: boolean;
 };
 
-const AUTH_KEY = "foo-bi-dar";
+const AUTH_KEY = "foo-bar";
 
-function getHeaders(): HeadersInit {
-  return [
+export const getSpotifyBaseUrl = () => "https://api.spotify.com/v1";
+
+export const mapSpotifyApi = (api: string) => {
+  return (baseUrl: string) => `${baseUrl}/${api}`;
+};
+
+export const getSpotifyApiBrowse = pipe(
+  getSpotifyBaseUrl,
+  mapSpotifyApi("browse")
+);
+
+export const mapSpotifyEndpoint = (endpoint: string) => {
+  return (apiUrl: string) => `${apiUrl}/${endpoint}`;
+};
+
+export const mapQueryParams = (queryParams: { [key: string]: string }) => {
+  return (path: string) => {
+    const url = new URL(path);
+
+    // have proper URL encoding
+    Object.entries(queryParams).forEach(([queryKey, queryValue]) =>
+      url.searchParams.append(queryKey, queryValue)
+    );
+
+    return url.toString();
+  };
+};
+
+export const mapFetchParams = (
+  url: RequestInfo,
+  init?: RequestInit
+): FetchParams => {
+  const headers = [
     ["Accept", "application/json"],
     ["Authorization", "Bearer " + AUTH_KEY]
   ];
-}
 
-export function buildUrl({
-  api,
-  endpoint,
-  urlQueries
-}: {
-  api: string;
-  endpoint: string;
-  urlQueries: StringDirectory;
-}): string {
-  const url = new URL(`https://api.spotify.com/v1/${api}/${endpoint}`);
+  return {
+    url,
+    init: { ...init, headers }
+  };
+};
 
-  // have proper URL encoding
-  Object.entries(urlQueries).forEach(([queryKey, queryValue]) =>
-    url.searchParams.append(queryKey, queryValue)
-  );
+/*
+ * watcher would not need null-check because
+ * only 1st emission has the initial null value and
+ * only 2nd emission would have a real error and
+ * the 1st emission becomes ignored due to lazyness
+ */
+export const logErrors = <DTO>({
+  whitelist = []
+}: { whitelist?: number[] } = {}) => {
+  return (fetchResponse: FetchResponse<DTO>) => {
+    watch(
+      () => fetchResponse.error,
+      error => {
+        if (!error) {
+          return;
+        }
 
-  return url.toString();
-}
+        if (!error.status || !whitelist.includes(error.status)) {
+          window.console.warn("sentry:", error.message);
+        }
+      },
+      { lazy: true }
+    );
 
-export function httpFetch<DTO>(url: string): FetchResponse<DTO> {
-  const fetchResponse = state({
-    data: null,
-    error: null,
-    pending: true
-  });
+    return fetchResponse;
+  };
+};
 
+export function sendFetch<DTO>({ url, init }: FetchParams): FetchResponse<DTO> {
+  const fetchResponse = state({ data: null, error: null, pending: true });
   let controller: AbortController | null = null;
 
-  // TODO make it possible to fetch upon any desired event, not only onCreated
-  onCreated(async () => {
+  const doFetch = async () => {
     controller = new AbortController();
     const { signal } = controller;
-    const headers = getHeaders();
 
     try {
-      const response = await fetch(url, { headers, signal });
+      const response = await fetch(url, { ...init, signal });
 
       if (!response.ok) {
-        const message = response.statusText
-          ? `${response.status} ${response.statusText}`
-          : `${response.status}`;
-
-        throw TypeError(message);
+        throw {
+          message: response.statusText || String(response.status),
+          status: response.status
+        };
       }
 
       fetchResponse.data = await response.json();
@@ -70,7 +106,9 @@ export function httpFetch<DTO>(url: string): FetchResponse<DTO> {
     } finally {
       fetchResponse.pending = false;
     }
-  });
+  };
+
+  onCreated(doFetch);
 
   onBeforeDestroy(() => {
     if (controller) {
