@@ -16,26 +16,23 @@
       </v-list>
     </v-navigation-drawer>
 
-    <v-app-bar app color="primary" v-if="!startPage">
-      <span class="hidden-sm-and-up">
-        <v-app-bar-nav-icon class="white--text" @click="toggleDrawerOpen"></v-app-bar-nav-icon>
-      </span>
+    <v-app-bar app color="primary" dark v-if="!startPage">
+      <v-app-bar-nav-icon class="hidden-sm-and-up" @click="toggleDrawerOpen"></v-app-bar-nav-icon>
 
       <v-toolbar-title>
-        <router-link class="white--text" style="cursor: pointer" tag="span" to="/">{{ appTitle }}</router-link>
+        <router-link style="cursor: pointer" tag="span" to="/">vuemu</router-link>
       </v-toolbar-title>
 
       <v-spacer></v-spacer>
 
       <v-toolbar-items class="hidden-xs-only">
         <v-btn
-          class="white--text"
           text
           :key="navEntry.title"
           :to="{name: navEntry.routeName}"
           v-for="navEntry of navEntries"
         >
-          <v-icon class="white--text" left>{{ navEntry.svgPath }}</v-icon>
+          <v-icon left>{{ navEntry.svgPath }}</v-icon>
           {{ navEntry.title }}
         </v-btn>
       </v-toolbar-items>
@@ -57,8 +54,7 @@ import { Route } from "vue-router";
 
 export default createComponent({
   setup(_, { root }: Context) {
-    const appTitle = "vuemu";
-    const navEntries = value([
+    const navEntries = [
       {
         routeName: "categoryList",
         svgPath: mdiWidgets,
@@ -69,7 +65,8 @@ export default createComponent({
         svgPath: mdiMagnify,
         title: "Search"
       }
-    ]);
+    ];
+
     const drawerOpen = value(false);
     const startPage = value(true);
 
@@ -83,7 +80,6 @@ export default createComponent({
     );
 
     return {
-      appTitle,
       drawerOpen,
       navEntries,
       startPage,

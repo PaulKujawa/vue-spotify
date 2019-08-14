@@ -9,17 +9,19 @@ export default new Vuetify({
     iconfont: "mdiSvg"
   },
   theme: {
+    // see https://material.io/design/color/#color-theme-creation
     themes: {
       light: {
+        primary: colors.teal.base,
         // prettier-ignore
-        primary: colors.blueGrey.base,
-        secondary: colors.amber.base,
-        accent: colors.brown.lighten4,
+        secondary: colors.blueGrey.base,
         // prettier-ignore
-        error: colors.pink.base,
-        warning: colors.orange.base,
+        accent: colors.teal.base,
+        // prettier-ignore
+        error: colors.deepOrange.base,
+        warning: colors.amber.base,
         info: colors.cyan.base,
-        success: colors.teal.base
+        success: colors.green.base
       }
     }
   }

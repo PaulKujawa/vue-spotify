@@ -3,17 +3,12 @@
   <v-container>
     <v-layout row wrap>
       <v-flex xs12>
-        <v-card>
-          <v-card-title primary-title>
-            <span class="title error--text">upsy daisy!</span>
-          </v-card-title>
-
-          <v-card-text>I don't remember this place.</v-card-text>
-
-          <v-card-actions>
-            <v-btn to="/">Home</v-btn>
-          </v-card-actions>
-        </v-card>
+        <v-banner single-line>
+          I don't remember this place.
+          <template v-slot:actions>
+            <v-btn text :to="{name: 'startPage'}">Startpage</v-btn>
+          </template>
+        </v-banner>
       </v-flex>
     </v-layout>
   </v-container>

@@ -1,5 +1,5 @@
 <template>
-  <v-card color="accent" hover :to="{name: 'category', params: {id: category.id}}">
+  <v-card hover :to="{name: 'category', params: {id: category.id}}">
     <v-img aspect-ratio="1" :src="imageUrl">
       <template v-slot:placeholder>
         <v-layout>

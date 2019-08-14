@@ -3,8 +3,8 @@ import {
   FetchResponse,
   getSpotifyApiBrowse,
   logErrors,
-  mapFetchParams,
   mapQueryParams,
+  mapRequestInit,
   mapSpotifyEndpoint,
   sendFetch
 } from "@/utils/fetch-utils";
@@ -18,7 +18,7 @@ export function fetchCategories(): FetchResponse<CategoryPaging> {
     getSpotifyApiBrowse,
     mapSpotifyEndpoint("categories"),
     mapQueryParams({ limit: "40" }),
-    mapFetchParams,
+    mapRequestInit(),
     sendFetch,
     logErrors()
   )();
@@ -48,7 +48,7 @@ export function fetchCategory(id: string): FetchResponse<Category> {
   return pipe(
     getSpotifyApiBrowse,
     mapSpotifyEndpoint("categories/" + id),
-    mapFetchParams,
+    mapRequestInit(),
     sendFetch,
     logErrors({ whitelist: [404] })
   )();
