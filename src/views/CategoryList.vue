@@ -14,7 +14,9 @@
       </v-flex>
     </v-layout>
 
-    <auth-banner :error="res.error" v-if="res.error"></auth-banner>
+    <v-flex>
+      <auth-banner :error="res.error" v-if="res.error"></auth-banner>
+    </v-flex>
   </v-layout>
 </template>
 

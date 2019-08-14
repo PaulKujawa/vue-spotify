@@ -1,15 +1,15 @@
+import { store } from "@/plugins/vuex";
 import { pipe } from "@/utils/pipe";
 import { onBeforeDestroy, onCreated, state, watch } from "vue-function-api";
 
 type FetchParams = { url: RequestInfo; init: RequestInit };
+export type FetchResponseError = { message: string; status?: number } | null;
 
 export type FetchResponse<DTO> = {
   data: DTO | null;
-  error: { message: string; status?: number } | null;
+  error: FetchResponseError;
   pending: boolean;
 };
-
-const AUTH_KEY = "foo-bar";
 
 export const getSpotifyBaseUrl = () => "https://api.spotify.com/v1";
 
@@ -26,7 +26,9 @@ export const mapSpotifyEndpoint = (endpoint: string) => {
   return (apiUrl: string) => `${apiUrl}/${endpoint}`;
 };
 
-export const mapQueryParams = (queryParams: { [key: string]: string }) => {
+export const mapQueryParams = <T extends { [key: string]: string }>(
+  queryParams: T
+) => {
   return (path: string) => {
     const url = new URL(path);
 
@@ -39,18 +41,20 @@ export const mapQueryParams = (queryParams: { [key: string]: string }) => {
   };
 };
 
-export const mapFetchParams = (
-  url: RequestInfo,
-  init?: RequestInit
-): FetchParams => {
-  const headers = [
-    ["Accept", "application/json"],
-    ["Authorization", "Bearer " + AUTH_KEY]
-  ];
+export const mapRequestInit = (init?: RequestInit) => {
+  return (url: RequestInfo) => {
+    const headers = [["Accept", "application/json"]];
+    const { auth } = store.state;
 
-  return {
-    url,
-    init: { ...init, headers }
+    if (auth) {
+      // TODO otherwise, I could already throw here to save the request
+      headers.push(["Authorization", "Bearer " + auth.access_token]);
+    }
+
+    return {
+      url,
+      init: { headers, ...init }
+    };
   };
 };
 
@@ -108,6 +112,8 @@ export function sendFetch<DTO>({ url, init }: FetchParams): FetchResponse<DTO> {
     }
   };
 
+  // TODO support to bind sendFetch to reactive property (switchMap behaviour)
+  // vue-function-api does not support `effect-cleanup` of watch method yet
   onCreated(doFetch);
 
   onBeforeDestroy(() => {
