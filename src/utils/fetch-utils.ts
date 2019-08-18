@@ -46,9 +46,9 @@ export const mapRequestInit = (init?: RequestInit) => {
     const headers = [["Accept", "application/json"]];
     const { auth } = store.state;
 
-    if (auth) {
-      // TODO otherwise, I could already throw here to save the request
-      headers.push(["Authorization", "Bearer " + auth.access_token]);
+    // TODO otherwise, I could already throw here to save the request
+    if (auth.loggedIn) {
+      headers.push(["Authorization", "Bearer " + auth.accessToken]);
     }
 
     return {

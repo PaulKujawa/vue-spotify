@@ -2,7 +2,7 @@
   <v-banner single-line v-if="error.status === 401">
     Pardon me, that's sensitive.
     <template v-slot:actions>
-      <v-btn text :to="{name: 'login'}">Login</v-btn>
+      <v-btn text :to="{name: 'login', query:   {redirect: $route.fullPath}}">Login</v-btn>
     </template>
   </v-banner>
 </template>

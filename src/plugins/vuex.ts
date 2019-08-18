@@ -5,16 +5,19 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 type RootState = {
-  auth: AuthResponseSuccess | null;
+  auth: {
+    accessToken?: string;
+    loggedIn: boolean;
+  };
 };
 
 export const store = new Vuex.Store<RootState>({
   state: {
-    auth: null
+    auth: { loggedIn: false }
   },
   mutations: {
     authenticate(state, payload: AuthResponseSuccess) {
-      state.auth = payload;
+      state.auth = { accessToken: payload.access_token, loggedIn: true };
     }
   }
 });

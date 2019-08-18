@@ -28,7 +28,7 @@ export default createComponent({
     const icon = mdiDiscPlayer;
 
     const onInput = (_city: any) => {
-      root.$router.push({ name: "categoryList" });
+      root.$router.push({ name: "categories" });
     };
 
     return {

@@ -56,7 +56,7 @@ export default createComponent({
   setup(_, { root }: Context) {
     const navEntries = [
       {
-        routeName: "categoryList",
+        routeName: "categories",
         svgPath: mdiWidgets,
         title: "Browse"
       },
