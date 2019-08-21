@@ -1,23 +1,30 @@
 <template>
-  <v-layout column>
-    <v-flex>
+  <v-row>
+    <v-col cols="12">
       <h1 class="display-1">Categories</h1>
-    </v-flex>
+    </v-col>
 
-    <v-flex v-if="res.pending">
+    <v-col cols="12" v-if="res.pending">
       <v-progress-linear color="secondary" indeterminate></v-progress-linear>
-    </v-flex>
+    </v-col>
 
-    <v-layout row wrap v-if="res.data && res.data.categories.items.length">
-      <v-flex v-for="category of res.data.categories.items" :key="category.id" xs6 md4 lg3 xl2>
+    <template v-if="res.data && res.data.categories.items.length">
+      <v-col
+        cols="6"
+        md="4"
+        lg="3"
+        xl="2"
+        v-for="category of res.data.categories.items"
+        :key="category.id"
+      >
         <category-card :category="category"></category-card>
-      </v-flex>
-    </v-layout>
+      </v-col>
+    </template>
 
-    <v-flex>
+    <v-col>
       <auth-banner :error="res.error" v-if="res.error"></auth-banner>
-    </v-flex>
-  </v-layout>
+    </v-col>
+  </v-row>
 </template>
 
 <script lang="ts">

@@ -1,5 +1,5 @@
 <template>
-  <v-app :class="{ 'gradient-bg': startPage }">
+  <v-app>
     <v-navigation-drawer app :disable-resize-watcher="true" v-model="drawerOpen">
       <v-list>
         <v-list-item
@@ -39,7 +39,7 @@
     </v-app-bar>
 
     <v-content>
-      <v-container grid-list-lg :fill-height="startPage">
+      <v-container :fluid="startPage" :class="{'pa-0': startPage}">
         <router-view></router-view>
       </v-container>
     </v-content>
@@ -89,27 +89,9 @@ export default createComponent({
 });
 </script>
 
-<style lang="scss" scoped>
-.gradient-bg {
-  // pink, orange, cyan, teal lighten3
-  background: linear-gradient(
-    -45deg,
-    #e694b0,
-    #f7cd8b,
-    #96dce8,
-    #91c9c3
-  ) !important;
-  background-size: 400% 100% !important;
-  animation: Gradient 5s ease infinite alternate;
-}
-
-@keyframes Gradient {
-  0% {
-    background-position: 0% 0%;
-  }
-  100% {
-    background-position: 100% 0%;
-  }
+<style lang="scss">
+html {
+  // see https://github.com/vuetifyjs/vuetify/issues/864
+  overflow-y: auto !important;
 }
 </style>
-

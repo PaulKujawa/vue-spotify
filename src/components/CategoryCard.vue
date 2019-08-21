@@ -2,11 +2,9 @@
   <v-card hover :to="{name: 'category', params: {id: category.id}}">
     <v-img aspect-ratio="1" :src="imageUrl">
       <template v-slot:placeholder>
-        <v-layout>
-          <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1 1" width="100%">
-            <rect fill="#131618" height="1" width="1" />
-          </svg>
-        </v-layout>
+        <svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 1 1" width="100%">
+          <rect fill="#131618" height="1" width="1" />
+        </svg>
       </template>
     </v-img>
 

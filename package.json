@@ -28,7 +28,7 @@
   },
   "devDependencies": {
     "@babel/polyfill": "^7.0.0",
-    "@mdi/js": "^3.6.95",
+    "@mdi/js": "^4.0.96",
     "@types/node": "^10.12.1",
     "@vue/cli-plugin-babel": "^3.8.0",
     "@vue/cli-plugin-typescript": "^3.8.1",

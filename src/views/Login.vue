@@ -1,8 +1,8 @@
 <template></template>
 
 <script lang="ts">
-import { createComponent } from "vue-function-api";
 import { getSpotifyAuthUrl, setPostAuthTarget } from "@/utils/auth-utils";
+import { createComponent } from "vue-function-api";
 
 export default createComponent({
   setup(_: any, { root }: any) {

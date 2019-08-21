@@ -1,5 +1,5 @@
 <template>
-  <v-layout column>
+  <v-row>
     <v-flex>
       <h1 class="display-1">Spotify category</h1>
     </v-flex>
@@ -11,7 +11,7 @@
     <div v-if="res.data">{{ res.data }}</div>
 
     <auth-banner :error="res.error" v-if="res.error"></auth-banner>
-  </v-layout>
+  </v-row>
 </template>
 
 <script lang="ts">
