@@ -26,7 +26,7 @@ export const router = new Router({
     },
     {
       path: "/categories",
-      name: "categories",
+      name: "categoryList",
       beforeEnter: authGuard,
       component: () =>
         import(

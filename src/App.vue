@@ -48,15 +48,14 @@
 
 <script lang="ts">
 import { mdiMagnify, mdiWidgets } from "@mdi/js";
-import { createComponent, value, watch } from "vue-function-api";
+import { computed, createComponent, value } from "vue-function-api";
 import { Context } from "vue-function-api/dist/types/vue";
-import { Route } from "vue-router";
 
 export default createComponent({
   setup(_, { root }: Context) {
     const navEntries = [
       {
-        routeName: "categories",
+        routeName: "categoryList",
         svgPath: mdiWidgets,
         title: "Browse"
       },
@@ -68,16 +67,9 @@ export default createComponent({
     ];
 
     const drawerOpen = value(false);
-    const startPage = value(true);
+    const startPage = computed(() => root.$route.name === "startPage");
 
     const toggleDrawerOpen = () => (drawerOpen.value = !drawerOpen.value);
-
-    watch(
-      () => root.$route,
-      (to: Route) => {
-        startPage.value = to.name === "startPage";
-      }
-    );
 
     return {
       drawerOpen,

@@ -15,7 +15,7 @@
         class="overlay-button"
         color="white"
         outlined
-        :to="{name: 'login'}"
+        :to="{name: 'categoryList'}"
       >Connect with Spotify</v-btn>
     </div>
   </v-row>

@@ -3,7 +3,7 @@ import { store } from "@/plugins/vuex";
 import { mapQueryParams } from "@/utils/fetch-utils";
 import { webStorage } from "@/utils/web-storage";
 
-const AUTH_WEB_STORAGE_KEY = "oauth-redirect";
+const AUTH_WEB_STORAGE_KEY = "auth-redirect";
 
 export const getSpotifyAuthUrl = () => {
   // url needs to be registered in Spotify.
@@ -42,7 +42,7 @@ export const getPostAuthTarget = () => {
   }
 
   if (store.state.auth.loggedIn) {
-    return preAuthTarget ? { path: preAuthTarget } : { name: "categories" };
+    return preAuthTarget ? { path: preAuthTarget } : { name: "categoryList" };
   }
 
   return { name: "startPage" };

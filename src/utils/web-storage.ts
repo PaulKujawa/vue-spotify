@@ -1,7 +1,7 @@
 export const webStorage = {
-  getItem<T>(id: string): T | undefined {
+  getItem<T = string>(id: string): T | undefined {
     try {
-      const stored = sessionStorage.getItem(id);
+      const stored = localStorage.getItem(id);
 
       if (stored) {
         return JSON.parse(stored);
@@ -12,9 +12,9 @@ export const webStorage = {
   },
   setItem(id: string, value: any): void {
     const toBeStore = JSON.stringify(value);
-    sessionStorage.setItem(id, toBeStore);
+    localStorage.setItem(id, toBeStore);
   },
   removeItem(id: string): void {
-    sessionStorage.removeItem(id);
+    localStorage.removeItem(id);
   }
 };
