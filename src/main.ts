@@ -5,7 +5,6 @@ import "@/plugins/sentry";
 import "@/plugins/vue-functions-api";
 import vuetify from "@/plugins/vuetify";
 import { store } from "@/plugins/vuex";
-import "@babel/polyfill";
 import Vue from "vue";
 
 Vue.config.productionTip = false;
