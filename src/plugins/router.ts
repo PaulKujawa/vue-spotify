@@ -9,7 +9,7 @@ import Router, { NavigationGuard } from "vue-router";
 Vue.use(Router);
 
 const authGuard: NavigationGuard = (to, _, next) => {
-  if (store.state.auth.loggedIn) {
+  if (store.getters.auth.loggedIn) {
     next();
   } else {
     next({ name: "login", query: { redirect: to.fullPath } });

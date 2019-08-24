@@ -41,7 +41,7 @@ export const getPostAuthTarget = () => {
     webStorage.removeItem(AUTH_WEB_STORAGE_KEY);
   }
 
-  if (store.state.auth.loggedIn) {
+  if (store.getters.auth.loggedIn) {
     return preAuthTarget ? { path: preAuthTarget } : { name: "categoryList" };
   }
 

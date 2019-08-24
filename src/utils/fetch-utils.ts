@@ -44,7 +44,7 @@ export const mapQueryParams = <T extends { [key: string]: string }>(
 export const mapRequestInit = (init?: RequestInit) => {
   return (url: RequestInfo) => {
     const headers = [["Accept", "application/json"]];
-    const { auth } = store.state;
+    const auth = store.getters.auth;
 
     // TODO otherwise, I could already throw here to save the request
     if (auth.loggedIn) {
