@@ -2,11 +2,7 @@
   <v-row justify="center">
     <v-col class="image-container pa-0">
       <!-- TODO provide different image widths and eventually also a generated, inline SVG placeholder -->
-      <v-img
-        height="100%"
-        position="center"
-        :src="require('@/assets/images/unsplash-headphones.jpg')"
-      />
+      <v-img height="100%" position="center" src="/images/unsplash-headphones.jpg" />
     </v-col>
 
     <div class="align-center d-flex flex-column justify-space-between overlay">
