@@ -82,8 +82,9 @@ export default createComponent({
 </script>
 
 <style lang="scss">
-html {
+html,
+body {
   // see https://github.com/vuetifyjs/vuetify/issues/864
-  overflow-y: auto !important;
+  overflow-y: hidden !important;
 }
 </style>

@@ -26,7 +26,7 @@ export const store = new Vuex.Store<RootState>({
   mutations: {
     authenticate(state, { access_token, expires_in }: AuthResponseSuccess) {
       const date = new Date();
-      const expiration = date.getTime() + expires_in;
+      const expiration = date.getTime() + expires_in * 1000;
       const storage = { accessToken: access_token, expiration };
 
       state.auth = { ...storage, loggedIn: true };
