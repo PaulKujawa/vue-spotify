@@ -2,10 +2,10 @@
 
 <script lang="ts">
 import { getPostAuthTarget, mapSpotifyAuthRes } from "@/utils/auth-utils";
-import { createComponent } from "vue-function-api";
+import { createComponent } from "@vue/composition-api";
 
 export default createComponent({
-  setup(_, { root }: any) {
+  setup(_: any, { root }: any) {
     const spotifyResponse = mapSpotifyAuthRes(window.location.hash);
 
     if ("access_token" in spotifyResponse) {

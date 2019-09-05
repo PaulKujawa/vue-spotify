@@ -8,17 +8,18 @@
 </template>
 
 <script lang="ts">
-import { createComponent, PropType } from "vue-function-api";
+import { createComponent } from "@vue/composition-api";
 
-export default createComponent({
+interface Props {
+  error: { message: string };
+}
+
+export default createComponent<Props>({
   props: {
-    // TODO see https://github.com/vuejs/vue-function-api/issues/15
-    error: (null as any) as PropType<{ message: string }>
+    error: {}
   },
-  setup({ error }) {
-    return {
-      error
-    };
+  setup() {
+    return {};
   }
 });
 </script>

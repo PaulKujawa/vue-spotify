@@ -1,6 +1,6 @@
 import { store } from "@/plugins/vuex";
 import { pipe } from "@/utils/pipe";
-import { onBeforeDestroy, onCreated, state, watch } from "vue-function-api";
+import { onBeforeUnmount, reactive, watch } from "@vue/composition-api";
 
 type FetchParams = { url: RequestInfo; init: RequestInit };
 export type FetchResponseError = { message: string; status?: number } | null;
@@ -87,13 +87,13 @@ export const logErrors = <DTO>({
 };
 
 export function sendFetch<DTO>({ url, init }: FetchParams): FetchResponse<DTO> {
-  const fetchResponse = state({ data: null, error: null, pending: true });
-  let controller: AbortController | null = null;
+  const fetchResponse = reactive({ data: null, error: null, pending: true });
+  const controller = new AbortController();
+  const { signal } = controller;
 
-  const doFetch = async () => {
-    controller = new AbortController();
-    const { signal } = controller;
-
+  // TODO support to bind sendFetch to reactive property (switchMap behaviour)
+  // vue-function-api does not support `effect-cleanup` of watch method yet
+  (async () => {
     try {
       const response = await fetch(url, { ...init, signal });
 
@@ -110,17 +110,9 @@ export function sendFetch<DTO>({ url, init }: FetchParams): FetchResponse<DTO> {
     } finally {
       fetchResponse.pending = false;
     }
-  };
+  })();
 
-  // TODO support to bind sendFetch to reactive property (switchMap behaviour)
-  // vue-function-api does not support `effect-cleanup` of watch method yet
-  onCreated(doFetch);
-
-  onBeforeDestroy(() => {
-    if (controller) {
-      controller.abort();
-    }
-  });
+  onBeforeUnmount(controller.abort);
 
   return fetchResponse;
 }

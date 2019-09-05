@@ -32,7 +32,7 @@ import AuthBanner from "@/components/AuthBanner.vue";
 import CategoryCard from "@/components/CategoryCard.vue";
 import { fetchCategories } from "@/repositories/category-repository";
 import { mdiLogin } from "@mdi/js";
-import { createComponent } from "vue-function-api";
+import { createComponent } from "@vue/composition-api";
 
 export default createComponent({
   components: { AuthBanner, CategoryCard },

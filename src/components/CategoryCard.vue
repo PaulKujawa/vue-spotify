@@ -17,18 +17,20 @@
 <script lang="ts">
 import { Category } from "@/models/category";
 import { getLazyImgSrc } from "@/utils/lazy-img";
-import { createComponent, PropType } from "vue-function-api";
+import { createComponent } from "@vue/composition-api";
 
-export default createComponent({
+interface Props {
+  category: Category;
+}
+
+export default createComponent<Props>({
   props: {
-    // TODO see https://github.com/vuejs/vue-function-api/issues/15
-    category: (null as any) as PropType<Category>
+    category: {}
   },
-  setup({ category }) {
+  setup({ category }: Props) {
     const imageUrl = getLazyImgSrc(category.icons[0].url);
 
     return {
-      category,
       imageUrl
     };
   }

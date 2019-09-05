@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="center">
+  <v-row justify="center ma-0">
     <v-col class="image-container pa-0">
       <!-- TODO provide different image widths and eventually also a generated, inline SVG placeholder -->
       <v-img height="100%" position="center" src="/images/unsplash-headphones.jpg" />
@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { createComponent } from "vue-function-api";
+import { createComponent } from "@vue/composition-api";
 
 export default createComponent({
   setup() {

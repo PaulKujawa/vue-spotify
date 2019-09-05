@@ -48,11 +48,10 @@
 
 <script lang="ts">
 import { mdiMagnify, mdiWidgets } from "@mdi/js";
-import { computed, createComponent, value } from "vue-function-api";
-import { Context } from "vue-function-api/dist/types/vue";
+import { computed, createComponent, ref } from "@vue/composition-api";
 
 export default createComponent({
-  setup(_, { root }: Context) {
+  setup(_: any, { root }: any) {
     const navEntries = [
       {
         routeName: "categoryList",
@@ -66,7 +65,7 @@ export default createComponent({
       }
     ];
 
-    const drawerOpen = value(false);
+    const drawerOpen = ref<boolean>(false);
     const startPage = computed(() => root.$route.name === "startPage");
 
     const toggleDrawerOpen = () => (drawerOpen.value = !drawerOpen.value);

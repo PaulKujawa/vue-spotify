@@ -1,4 +1,4 @@
+import VueCompositionApi from "@vue/composition-api";
 import Vue from "vue";
-import { plugin } from "vue-function-api";
 
-Vue.use(plugin);
+Vue.use(VueCompositionApi);

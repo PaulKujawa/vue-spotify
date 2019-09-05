@@ -17,12 +17,11 @@
 <script lang="ts">
 import AuthBanner from "@/components/AuthBanner.vue";
 import { fetchCategory } from "@/repositories/category-repository";
-import { createComponent } from "vue-function-api";
-import { Context } from "vue-function-api/dist/types/vue";
+import { createComponent } from "@vue/composition-api";
 
 export default createComponent({
   components: { AuthBanner },
-  setup(_, { root }: Context) {
+  setup(_: any, { root }: any) {
     // TODO handle missing query parameter
 
     const categoryId = root.$route.params.id;

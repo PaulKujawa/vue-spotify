@@ -2,7 +2,7 @@
 
 <script lang="ts">
 import { getSpotifyAuthUrl, setPostAuthTarget } from "@/utils/auth-utils";
-import { createComponent } from "vue-function-api";
+import { createComponent } from "@vue/composition-api";
 
 export default createComponent({
   setup(_: any, { root }: any) {

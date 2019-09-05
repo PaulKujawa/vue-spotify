@@ -9,7 +9,7 @@ import {
   sendFetch
 } from "@/utils/fetch-utils";
 import { pipe } from "@/utils/pipe";
-import { state, watch } from "vue-function-api";
+import { reactive, watch } from "@vue/composition-api";
 
 const cache: { [id: string]: Category } = {};
 
@@ -38,7 +38,8 @@ export function fetchCategories(): FetchResponse<CategoryPaging> {
 
 export function fetchCategory(id: string): FetchResponse<Category> {
   if (cache[id]) {
-    return state({
+    // TODO throws during compilation
+    return reactive({
       data: cache[id],
       error: null,
       pending: false

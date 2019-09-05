@@ -1,8 +1,13 @@
-import { computed, onDestroyed, onMounted, value } from "vue-function-api";
+import {
+  computed,
+  onBeforeUnmount,
+  onMounted,
+  ref
+} from "@vue/composition-api";
 
 export const getLazyImgSrc = (src: string) => {
-  const observer = value<IntersectionObserver | null>(null);
-  const intersected = value(false);
+  const observer = ref<IntersectionObserver | null>(null);
+  const intersected = ref<boolean>(false);
 
   // TODO see https://github.com/vuejs/vue-function-api/issues/39
   onMounted(function(this: any) {
@@ -21,7 +26,7 @@ export const getLazyImgSrc = (src: string) => {
     observer.value!.observe(this.$el);
   });
 
-  onDestroyed(() => observer.value!.disconnect());
+  onBeforeUnmount(() => observer.value!.disconnect());
 
   return computed(() => (intersected.value ? src : ""));
 };
