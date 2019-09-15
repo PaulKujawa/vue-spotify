@@ -1,5 +1,3 @@
-[![Netlify Status](https://api.netlify.com/api/v1/badges/f9c43102-a910-4178-a619-47d69ae31ddd/deploy-status)](https://app.netlify.com/sites/vuemu/deploys)
-
 # Spotify consuming Vue app
 
 ## Contribute
